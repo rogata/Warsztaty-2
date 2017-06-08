@@ -11,7 +11,7 @@ class Tweet {
     
     public function __construct(){
         $this->id=-1;
-        $this->userId=0;
+        $this->userId="";
         $this->text="";
         $this->creationDate="";
     }
@@ -90,15 +90,18 @@ class Tweet {
         return $return;
     }
     
-     public function saveToDB($connection){//chyba błąd przy warunku, albo wartości nie są poprawne? zapytanie do bazy jest poprawne
-        if($this->id == -1){
-            $sql = "INSERT INTO Posts (userId, text, creationDate) VALUES ($this->userId, $this->text, $this->creationDate)";
+     public function saveToDB(mysqli $connection){
+//chyba błąd przy warunku, albo wartości nie są poprawne? zapytanie do bazy jest poprawne
+       
+        if($this->id== -1){
+            $sql = "INSERT INTO Posts (userId, text, creationDate) VALUES ('$this->userId', '$this->text', $this->creationDate)";
             $result = $connection->query($sql);
              if($result == true){
                 $this->id = $connection->insert_id;
                 return true;
                 }
-        }
-        return false;
+       }
+       return false;
+       
     }
 }
