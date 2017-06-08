@@ -8,12 +8,18 @@ if(isset($_POST['email']) && isset($_POST['password'])){
     if($result==true && $result->num_rows>0){
         foreach ($result as $row){
             if($row['email']==$email && password_verify($password, $row['hashed_password'])){
+               
                 $id = $row['id'];
                 $name = $row['username']; 
+                    if($id > 0){
+                        $_SESSION['userId'] = $id;
+                        $_SESSION['username'] = $name;
+                    }
+                
                 
             $user=User::loadUserById($mysqli, $id);
             
-               return true;
+              // return true;
     
             
            // print_r($user);
@@ -23,10 +29,11 @@ if(isset($_POST['email']) && isset($_POST['password'])){
                 echo '<font color="red">Błędny login lub hasło!</font>';
             }elseif($row['email']!=$email && password_verify($password, $row['hashed_password'])) {
                 echo '<font color="red">Błędny login lub hasło!</font>';
+            }
         }
     }
-    }
 }
+
 
 ?>
 <!doctype html>
