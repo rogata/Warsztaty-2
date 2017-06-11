@@ -66,7 +66,9 @@
          
     }
           
-
+if(isset($_POST['logOut']) && isset($_SESSION['userId'])){
+    unset($_SESSION['userId']);
+}
       
     
     
