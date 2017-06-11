@@ -20,8 +20,8 @@ $newText = "";
 
         if(isset($_POST['post'])){
             $newText =$_POST['post'];
-           // var_dump($newText);
-           // var_dump($userId);
+            var_dump($newText);
+            var_dump($userId);
             $sql = "SELECT text FROM Posts WHERE userId=$userId";
             $res = $mysqli->query($sql);
             if($res==true && $res->num_rows > 0){
@@ -35,6 +35,16 @@ $newText = "";
                         $newPost->saveToDB($mysqli);
 
                     }
+                }
+            }elseif($res->num_rows == null){
+                if($newText != ""){
+                     $date = 'NOW()';
+                        $newPost = new Tweet();
+                        $newPost->setText($newText);
+                        $newPost->setCreationDate($date);
+                        $newPost->setUserId($userId);
+                        $newPost->saveToDB($mysqli);
+
                 }
             }
            
@@ -53,9 +63,9 @@ $newText = "";
         for($i=0; $i<count($allPosts); $i++){
             echo '<tr>';
             echo '<td>'.$allPosts[$i]->getUserId();
-            echo '<td colspan=2>'.$allPosts[$i]->getText()." ".$allPosts[$i]->getCreationDate()."</td>";
-          //  echo '<td>'.$allPosts[$i]->getText()."</td>";
-          //  echo '<td>'.$allPosts[$i]->getCreationDate()."</td>";
+           // echo '<td colspan=2>'.$allPosts[$i]->getText()." ".$allPosts[$i]->getCreationDate()."</td>";
+            echo '<td>'.$allPosts[$i]->getText()."</td>";
+            echo '<td>'.$allPosts[$i]->getCreationDate()."</td>";
             echo '</tr>';
         }
         echo '</table>';
