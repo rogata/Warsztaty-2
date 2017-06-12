@@ -26,7 +26,7 @@ $newText = "";
             $res = $mysqli->query($sql);
             if($res==true && $res->num_rows > 0){
                 if($row=$res->fetch_assoc()){
-                    if($row['text']!=$newText && $newText != ""){
+                    if($row['text']!=$newText && $newText != ""){//po zapisaniu wartości $_POST['post'] cały czas dodawał się do bazy ten sap wpis po każdym odświrzeniu                                   //strony,dlatego postawiłam taki warunek, ale i tak czasami zapisze się dwa razy)
                         $date = 'NOW()';
                         $newPost = new Tweet();
                         $newPost->setText($newText);
@@ -36,7 +36,7 @@ $newText = "";
 
                     }
                 }
-            }elseif($res->num_rows == null){
+            }elseif($res->num_rows == null){ 
                 if($newText != ""){
                      $date = 'NOW()';
                         $newPost = new Tweet();
