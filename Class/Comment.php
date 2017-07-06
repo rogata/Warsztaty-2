@@ -1,5 +1,4 @@
 <?php
-//$sql="CREATE TABLE Comment (id int auto_increment, user_id int not null, post_id int not null, text varchar(60), creation_date datetime, PRIMARY KEY(id), FOREIGN KEY(user_id) REFERENCES Users(id), FOREIGN KEY(post_id) REFERENCES Posts(id))";
 class Comment{
     
     private $id;
@@ -82,8 +81,17 @@ class Comment{
     
     
      public function saveToDB($connection){
-         
+        if($this->id==-1){
+            $sql="INSERT INTO Comment (user_id, post_id, text, creation_date) VALUE ('$this->user_id', '$this->post_id', '$this->text', $this->creation_date)";
+            $result = $connection->query($sql);
+            if($result == true){
+                $this->id = $connection->insert_id;
+                return true;
+            }
+           return false;
+        }
      }
    
     
 }
+//$sql="CREATE TABLE Comment (id int auto_increment, user_id int not null, post_id int not null, text varchar(60), creation_                date datetime, PRIMARY KEY(id), FOREIGN KEY(user_id) REFERENCES Users(id), FOREIGN KEY(post_id) REFERENCES Posts(id))";
