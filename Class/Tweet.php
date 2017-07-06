@@ -91,8 +91,6 @@ class Tweet {
     }
     
      public function saveToDB(mysqli $connection){
-//chyba błąd przy warunku, albo wartości nie są poprawne? zapytanie do bazy jest poprawne
-       
         if($this->id== -1){
             $sql = "INSERT INTO Posts (userId, text, creationDate) VALUES ('$this->userId', '$this->text', $this->creationDate)";
             $result = $connection->query($sql);
