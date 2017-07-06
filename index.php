@@ -7,10 +7,8 @@
 
     if(!empty($_SESSION['userId']) && !empty($_SESSION['username'])){
     
-    
-        
+          include_once 'posts.php';
           
-          include_once 'posts.php';//tutaj utknęłam!
     }else{
     
     include_once 'logIn.php';
@@ -55,11 +53,6 @@
                     
                 }
 
-
-                $user=User::loadUserById($mysqli, $id);
-               // print_r($newUser);
-                  //  return true;
-
             }
 
         }
@@ -69,10 +62,8 @@
 if(isset($_POST['logOut']) && isset($_SESSION['userId'])){
     unset($_SESSION['userId']);
 }
-      
     
-    
-   // require_once 'foot.php';
+    require_once 'foot.php';
     $mysqli->close();
     $mysqli=null;
 ?>
