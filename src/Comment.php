@@ -60,8 +60,8 @@ class Comment{
         return null;
     }
     
-    static public function loadAllCommentsByPostId(mysqli $connection, $user_id){
-        $sql="SELECT * FROM Comment WHERE user_id=$user_id";
+    static public function loadAllCommentsByPostId(mysqli $connection, $post_id){
+        $sql="SELECT * FROM Comment WHERE post_id=$post_id";
         $ret=[];
         $result = $connection->query($sql);
         if($result == true && $result->num_rows>0){
