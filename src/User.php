@@ -78,6 +78,9 @@ class User {
         $this->hashedPassword =
             password_hash($newPassword, PASSWORD_BCRYPT);
     }
+    public function getPassword(){
+       return $this->hashedPassword;
+    }
     public function getUsername(){
         return $this->username;
     }
