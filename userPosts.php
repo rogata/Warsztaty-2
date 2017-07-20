@@ -2,8 +2,8 @@
 
     require_once 'config.php';
     require_once 'db_conn.php';
-    require_once 'Class/User.php';
-    require_once 'Class/Tweet.php';
+    require_once 'src/User.php';
+    require_once 'src/Tweet.php';
     
     if(isset($_GET['userId'])){
         
