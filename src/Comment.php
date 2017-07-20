@@ -61,7 +61,7 @@ class Comment{
     }
     
     static public function loadAllCommentsByPostId(mysqli $connection, $post_id){
-        $sql="SELECT * FROM Comment WHERE post_id=$post_id";
+        $sql="SELECT * FROM Comment WHERE post_id=$post_id ORDER BY creation_date DESC";
         $ret=[];
         $result = $connection->query($sql);
         if($result == true && $result->num_rows>0){
