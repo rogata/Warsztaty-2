@@ -26,11 +26,13 @@
                 }
                 
             }
-                return $userId;
+            return $_SESSION['userId'] = $userId;
         }
     }
-var_dump(userLogin($mysqli));
-$_SESSION['userId'] = userLogin($mysqli); 
+//var_dump(userLogin($mysqli));
+    
+    userLogin($mysqli);
+
 ?>
 <!doctype html>
 <html>
