@@ -1,17 +1,20 @@
 <?php
     session_start();
     
+    if(!isset($_SESSION['userId'])){
+    
+        $_SESSION['userId'] = 0;
+    }    
+    
     require_once 'config.php';
     require_once 'db_conn.php';
     
     require_once 'src/User.php';
-    require_once 'src/Tweet.php';
 
     
-        
             function registerNewUser($mysqli){
 
-                $newUserId = null;
+                $userId = 0;
 
                 if(isset($_POST['new_user']) && isset($_POST['new_email']) && isset($_POST['new_password'])){
                   $newUsername=$_POST['new_user'];
@@ -32,29 +35,25 @@
                         $newUser->setPassword($newPassword);
                         $newUser->saveToDB($mysqli);
 
-                        $newUserId = $mysqli->insert_id;
+                        $userId = $mysqli->insert_id;
                         }
 
                     }
 
-                return $newUserId; 
+                return $_SESSION['userId'] = $userId;
                 }
-
             }
-   // $_SESSION['userId']=registerNewUser($mysqli);  
-    if(!isset($_SESSION['userId'])){
-    
-        include_once 'logIn.php';
             
-    }else{
-        include_once 'posts.php';
+        registerNewUser($mysqli);
     
+    if($_SESSION['userId']>0){
+        include_once 'posts.php';
+    }else{
+        include_once 'logIn.php';
     }
     
-
         
-            
-if(isset($_POST['logOut']) && isset($_SESSION['userId'])){
+if(isset($_POST['logOut']) && $_SESSION['userId']>0){
     unset($_SESSION['userId']);
 }
     
