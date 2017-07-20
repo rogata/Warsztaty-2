@@ -28,14 +28,27 @@
     
     function loadComments($mysqli, $post_id){
         
-        $getTweetId = Tweet::loadAllTweets($mysqli);
+       // $getTweetId = Tweet::loadAllTweets($mysqli);
         $comments = Comment::loadAllCommentsByPostId($mysqli, $post_id);
-        
-      //  if($getTweetId->getId()==$post_id){
-        echo'<tr>';
-        echo'<th>'.$comments->getUser_id().'</th>';
-        echo'<td>'.$comments->getText().'</td>';
-        echo'</tr>';
-       // }
-        
+        for($i=0; $i<count($comments); $i++){
+            echo '<table>';
+                $sql = "SELECT username FROM Users WHERE id=".$comments[$i]->getUser_id();
+                $result = $mysqli->query($sql);
+                if($result->num_rows>0){
+                    foreach ($result as $row) {
+                    $userName=$row['username'];
+
+                    }
+                }
+                //var_dump($result);
+                echo '<tr>';
+                echo '<th>'.$userName.'</th>';
+               // echo '<td colspan=2>'.$allPosts[$i]->getText()." ".$allPosts[$i]->getCreationDate()."</td>";
+                echo '<td>'.$comments[$i]->getText()."</td>";
+                //echo '<td style="float:right">'.$allPosts[$i]->getCreationDate()."</td>";
+                echo '</tr>';
+
+
+            echo '</table>'; 
+        }
     }
