@@ -42,32 +42,6 @@ class User {
         $this->hashedPassword="";
         $this->email="";
     }
-    public function saveToDB($connection){
-        if($this->id==-1){
-            if($this->id == -1){
-            $sql = "INSERT INTO Users(username, email, hashed_password)
-                VALUES ('$this->username', '$this->email', '$this->hashedPassword')";
-            $result = $connection->query($sql);
-            if($result == true){
-                $this->id = $connection->insert_id;
-                return true;
-                }
-            }
-            return false;
-        } else {
-            $sql = "
-                UPDATE Users SET
-                    username='$this->username',
-                    email='$this->email',
-                    hashed_password='$this->hashedPassword'
-                WHERE
-                    id=$this->id";
-            $result = $connection->query($sql);
-            if($result == true){
-                return true;
-            }
-        }
-    }
     public function setUsername($newUsername){
         $this->username=$newUsername;
     }
@@ -89,6 +63,26 @@ class User {
     }
     public function getId(){
         return $this->id;
+    }
+    public function saveToDB($connection){
+        if($this->id==-1){
+            $sql = "INSERT INTO Users(username, email, hashed_password)
+                VALUES ('$this->username', '$this->email', '$this->hashedPassword')";
+            $result = $connection->query($sql);
+            if($result == true){
+                $this->id = $connection->insert_id;
+                return true;
+            }
+        } else {
+            $sql = "UPDATE Users SET username='$this->username', "
+                    . "email='$this->email', hashed_password='$this->hashedPassword' "
+                    . "WHERE id='$this->id'";
+            $result = $connection->query($sql);
+            if($result == true){
+                return true;
+            }
+          }
+          return false;
     }
     public function delete(mysqli $connection){
         if($this->id != -1){
