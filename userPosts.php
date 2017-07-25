@@ -8,12 +8,13 @@
     if(isset($_GET['userId'])){
         
         $userId = $_GET['userId'];
+        var_dump($userId);
         $userPosts=Tweet::loadAllTweetsByUserId($mysqli, $userId);
         $username=User::loadUserById($mysqli, $userId);
-       // var_dump($username);
+        var_dump($username);
         $userName=$username->getUsername();
         //var_dump($userPosts);
-      
+           
        echo '<table border="2" cellpadding="10">';
         for($i=0; $i<count($userPosts); $i++){
             echo '<tr>';
