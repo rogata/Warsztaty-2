@@ -1,5 +1,5 @@
 <?php 
-
+    
     include 'comments.php';
     require_once 'src/Tweet.php';
 
@@ -14,14 +14,31 @@
     
     echo '<h3>'.  userById($mysqli, $userId)->getUsername().', witaj na stronie głównej!</h3>';
     
+    function updateData(){
+        
+        if(isset($_POST['update'])){
+        echo '<form action="" method="POST">           
+               <input type="text" name="newUsername" placeholder="username">
+               <input type="email" name="newEmail" value="" placeholder="e-mail">
+               <input type="password" name="newPassword" placeholder="password">
+               <button type="submit" name="newLogIn" >Zmień</button>
+             </form>';
+        }
+        
+    }
 ?>
-<!doctype html>
+
 <html>
     <body>
         <form action="index.php" method="post" style="float:right">
             <button type="submit" name="logOut">Wyloguj</button>
-        </form>
-    <center>        
+        </form>  
+        <a href="message.php" style="float:left">Wyślij wiadomość do użytkownika</a><br>
+        <form action="" method="post">
+            <button type="submit" name="update">Aktualizuj dane</button>  
+        </form><br>
+        <?php updateData(); ?>
+    <center> 
         <form action="" method="POST">
             <textarea cols="70" name="post" placeholder="Dodaj wpis"></textarea>
             <button type="submit" name="btn">Opublikuj</button>
@@ -29,9 +46,8 @@
     </body>
 <?php
                
-echo ' <a href="userPosts.php?userId='.$userId.'" style="float:left">Moje wpisy</a>';
-
-// var_dump($userId);
+  echo '<a href="userPosts.php?userId='.$userId.'" style="float:left">Moje wpisy</a><br>';
+  //echo '<a href="message.php" style="float:left">Wyślij wiadomość do użytkownika</a><br>';
 
     function saveNewText($userId, $mysqli){
         $newText = "";
@@ -87,6 +103,23 @@ echo ' <a href="userPosts.php?userId='.$userId.'" style="float:left">Moje wpisy<
     
     loadTweets($mysqli, $userId);
     
+    function updateDataBase($mysqli, $userId){
+        if(isset($_POST['newUsername']) && !empty($_POST['newUsername'])){ //|| isset($_POST['newEmail']) || isset($_POST['newPassword'])){
+            $newUsername = $_POST['newUsername'];
+            var_dump (userById($mysqli, $userId)->setUsername($newUsername));
+            userById($mysqli, $userId)->saveToDB($mysqli);
+            
+        }
+           /* $newEmail = $_POST['newEmail'];
+            $newPassword = $_POST['newPassword'];
+            var_dump($newUsername);
+            var_dump(userById($mysqli, $userId)->getId());
+            userById($mysqli, $userId)->setPassword($newPassword);
+            userById($mysqli, $userId)->setEmail($newEmail);*/
+        
+    }
+    
+    updateDataBase($mysqli, $userId);
 ?>
     </center>
 </html>
