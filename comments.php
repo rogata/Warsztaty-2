@@ -12,7 +12,6 @@
     
     function addComments($mysqli, $userId, $postId, $i){
         
-        
             $comments = $_POST['comment'.$i];
             $date = 'NOW()';
             
@@ -22,8 +21,6 @@
             $saveComment->setCreationDate($date);
             $saveComment->setPost_id($postId);
             $saveComment->saveToDB($mysqli);
-            
-        
     }
     
     function loadComments($mysqli, $post_id){
@@ -37,18 +34,13 @@
                 if($result->num_rows>0){
                     foreach ($result as $row) {
                     $userName=$row['username'];
-
                     }
                 }
                 //var_dump($result);
                 echo '<tr>';
                 echo '<th>'.$userName.'</th>';
-               // echo '<td colspan=2>'.$allPosts[$i]->getText()." ".$allPosts[$i]->getCreationDate()."</td>";
                 echo '<td>'.$comments[$i]->getText()."</td>";
-                //echo '<td style="float:right">'.$allPosts[$i]->getCreationDate()."</td>";
                 echo '</tr>';
-
-
             echo '</table>'; 
         }
     }
