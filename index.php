@@ -1,16 +1,22 @@
 <?php
     session_start();
     
-    if(!isset($_SESSION['userId'])){
-    
-        $_SESSION['userId'] = 0;
-    }    
-    
     require_once 'config.php';
     require_once 'db_conn.php';
     
     require_once 'src/User.php';
 
+    if(!isset($_SESSION['userId'])){
+    
+        $_SESSION['userId'] = 0;
+    }
+    
+    if($_SESSION['userId']>0){
+        include_once 'posts.php';
+    }else{   
+        include_once 'logIn.php';
+    }
+    
     
             function registerNewUser($mysqli){
 
@@ -43,15 +49,8 @@
                 return $_SESSION['userId'] = $userId;
                 }
             }
-            
+        
         registerNewUser($mysqli);
-    
-    if($_SESSION['userId']>0){
-        include_once 'posts.php';
-    }else{
-        include_once 'logIn.php';
-    }
-    
         
 if(isset($_POST['logOut']) && $_SESSION['userId']>0){
     unset($_SESSION['userId']);
